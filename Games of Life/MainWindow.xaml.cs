@@ -30,7 +30,7 @@ namespace Games_of_Life
             InitializeComponent();
             myCanvas.Focus();
 
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)//Creates and draws cells
             {
                 for (int j = 0; j < height; j++)
                 {
@@ -58,11 +58,11 @@ namespace Games_of_Life
         private void GameLoop(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)//Creates a deep copy of the cells
                 for (int j = 0; j < height; j++)
                     prevCells[i, j] = cells[i, j].DeepCopy();
 
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)//Checks for number of neighbors for each cell
             {
                 for (int j = 0; j < height; j++)
                 {
@@ -94,12 +94,12 @@ namespace Games_of_Life
                         cells[i, j].liveNeighbors++;
 
 
-                    if (cells[i, j].isAlive && (cells[i,j].liveNeighbors < 2 || cells[i, j].liveNeighbors > 3))
+                    if (cells[i, j].isAlive && (cells[i,j].liveNeighbors < 2 || cells[i, j].liveNeighbors > 3))//Kills cells that don't have 2 or 3 neighbors
                     {
                         cells[i, j].isAlive = false;
                         rectangles[i, j].Fill = Brushes.White;
                     }
-                    if (!(cells[i, j].isAlive) && cells[i, j].liveNeighbors == 3)
+                    if (!(cells[i, j].isAlive) && cells[i, j].liveNeighbors == 3)//Revives cells with 3 neighbors
                     {
                         cells[i, j].isAlive = true;
                         rectangles[i, j].Fill = Brushes.Black;
@@ -107,26 +107,29 @@ namespace Games_of_Life
 
                 }
             }
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < width; i++)//Updates cells copy
             {
                 for (int j = 0; j < height; j++)
                 {
                     prevCells[i, j] = cells[i, j];
                 }
             }
+
             Cell.Generation++;
             generationLabel.Content = $"Generation: {Cell.Generation}";
         }
 
-        private void ToggleLife(object sender, MouseButtonEventArgs e)
+        private void ToggleLife(object sender, MouseButtonEventArgs e)//Adds or removes life on click
         {
+            //Gets mouse position and converts it to grid position
             int x = Convert.ToInt32(e.GetPosition(this).X - marginX);
             int y = Convert.ToInt32(e.GetPosition(this).Y - marginY);
             x -= Mod(x, size);
             x /= size;
             y -= Mod(y, size);
             y /= size;
-            if (x >= 0 && x < width && y >=0 && y < height)
+
+            if (x >= 0 && x < width && y >=0 && y < height)//Checks if click is made within grid boundries and toggles life accordingly
             {
                 if (cells[x,y].isAlive)
                 {
@@ -141,7 +144,7 @@ namespace Games_of_Life
             }
         }
 
-        private void GameButton_Click(object sender, RoutedEventArgs e)
+        private void GameButton_Click(object sender, RoutedEventArgs e)//Starts or stops game timer
         {
             if ((string)gameButton.Content == "Start")
             {
@@ -155,7 +158,7 @@ namespace Games_of_Life
             }
         }
 
-        private void RandomSeedButton_Click(object sender, RoutedEventArgs e)
+        private void RandomSeedButton_Click(object sender, RoutedEventArgs e)//Randomly adds or removes life
         {
             Random random = new Random();
             for (int i = 0; i < width; i++)
@@ -178,7 +181,7 @@ namespace Games_of_Life
 
         }
 
-        private void ClearCanvas(object sender, RoutedEventArgs e)
+        private void ClearCanvas(object sender, RoutedEventArgs e)//Kills all life and stops timer
         {
             for (int i = 0; i < width; i++)
             {
@@ -198,7 +201,7 @@ namespace Games_of_Life
             }
         }
 
-        private int Mod(int dividend, int divisor)
+        private int Mod(int dividend, int divisor)//True modulo function
         {
             if (dividend >= 0)
                 return dividend % divisor;
@@ -207,7 +210,7 @@ namespace Games_of_Life
         }
 
 
-        private void SpeedChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SpeedChange(object sender, RoutedPropertyChangedEventArgs<double> e)//Slider logic for changing speed
         {
             switch (speedSlider.Value)
             {
