@@ -9,11 +9,18 @@
         Title="Game of Life">
     <Canvas x:Name="myCanvas" Focusable="True" Background="Transparent" MouseLeftButtonDown="ToggleLife">
         <Button x:Name="gameButton" Cursor="Hand" Content="Start" 
-                Canvas.Left="47" Canvas.Top="452" Click="GameButton_Click"/>
+                Canvas.Left="63" Canvas.Top="452" Click="GameButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button x:Name="randomSeedButton" Cursor="Hand" Content="Randomize" 
-                Canvas.Left="90" Canvas.Top="452" Click="RandomSeedButton_Click"/>
+                Canvas.Left="119" Canvas.Top="452" Click="RandomSeedButton_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Button x:Name="clearButton" Cursor="Hand" Content="Clear" 
-                Canvas.Left="170" Canvas.Top="452" Click="ClearCanvas"/>
+                Canvas.Left="205" Canvas.Top="452" Click="ClearCanvas" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label x:Name="generationLabel" Content="Generation: 0" 
+               Canvas.Left="241" Canvas.Top="449" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <Slider x:Name="speedSlider" Canvas.Left="125" Canvas.Top="483" Width="132" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Value="3" TickPlacement="BottomRight" SmallChange="1" Maximum="6" IsSnapToTickEnabled="True" ValueChanged="SpeedChange"/>
+        <Label Content="Speed up" Canvas.Left="262" Canvas.Top="477"/>
+        <Label Content="Slow down" Canvas.Left="57" Canvas.Top="477" HorizontalAlignment="Left" VerticalAlignment="Top"/>
     </Canvas>
 
 </Window>

@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Diagnostics;
@@ -58,12 +50,7 @@ namespace Games_of_Life
                 }
             }
 
-            int x = -18, y = 10;
-            Trace.WriteLine($"x0: {x}, y0: {y}");
-            int res = x % y;
-            Trace.WriteLine($"result {res}");
-
-            gameTimer.Interval = TimeSpan.FromMilliseconds(20);
+            gameTimer.Interval = TimeSpan.FromMilliseconds(200);
             gameTimer.Tick += GameLoop;
 
         }
@@ -128,6 +115,7 @@ namespace Games_of_Life
                 }
             }
             Cell.Generation++;
+            generationLabel.Content = $"Generation: {Cell.Generation}";
         }
 
         private void ToggleLife(object sender, MouseButtonEventArgs e)
@@ -201,6 +189,13 @@ namespace Games_of_Life
 
                 }
             }
+            Cell.Generation = 0;
+            generationLabel.Content = "Generation: 0";
+            if ((string)gameButton.Content == "Stop")
+            {
+                gameTimer.Stop();
+                gameButton.Content = "Start";
+            }
         }
 
         private int Mod(int dividend, int divisor)
@@ -211,5 +206,33 @@ namespace Games_of_Life
                 return divisor - (Math.Abs(dividend) % divisor);
         }
 
+
+        private void SpeedChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            switch (speedSlider.Value)
+            {
+                case 0:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(350);
+                    break;
+                case 1:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(300);
+                    break;
+                case 2:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(250);
+                    break;
+                case 3:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(200);
+                    break;
+                case 4:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(150);
+                    break;
+                case 5:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(100);
+                    break;
+                case 6:
+                    gameTimer.Interval = TimeSpan.FromMilliseconds(50);
+                    break;
+            }
+        }
     }
 }
